@@ -8,7 +8,8 @@ Journal:
 Decide later, some journal for psychologists
 My tip is Collabra: Psychology
 https://online.ucpress.edu/collabra
-- Collabra: Psychology has 7 sections representing the broad field of psychology, and a highlighted focus area of “Methodology and Research Practice.” Are: Cognitive Psychology Social Psychology Personality Psychology Clinical Psychology Developmental Psychology Organizational Behavior Methodology and Research Practice.
+- Collabra: Psychology has 7 sections representing the broad field of psychology, and a highlighted focus area of “Methodology and Research Practice.” 
+Are: Cognitive Psychology Social Psychology Personality Psychology Clinical Psychology Developmental Psychology Organizational Behavior Methodology and Research Practice.
 
 Goal: 
 Create an article that will explain statistical disclosure methods and showcase an anonymization approach on some datasets containing psych data.
