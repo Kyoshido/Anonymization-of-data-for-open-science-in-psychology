@@ -1,0 +1,40 @@
+Title: 
+Anonymization of data for open science in psychology
+
+Audience: 
+Psychologist
+
+Journal:
+Decide later, some journal for psychologists
+My tip is Collabra: Psychology
+https://online.ucpress.edu/collabra
+- Collabra: Psychology has 7 sections representing the broad field of psychology, and a highlighted focus area of “Methodology and Research Practice.” Are: Cognitive Psychology Social Psychology Personality Psychology Clinical Psychology Developmental Psychology Organizational Behavior Methodology and Research Practice.
+
+Goal: 
+Create an article that will explain statistical disclosure methods and showcase an anonymization approach on some datasets containing psych data.
+
+
+Structure: 
+
+• Introduction
+	- Discuss the importance of open science and data sharing.
+	- Discuss the Replication crisis
+	- State the aim of the paper, which is to explain statistical disclosure methods and showcase an anonymization approach on a psychological dataset
+
+• Overview of SDC Methods
+	- Overview of Anonymization Techniques, Description of SDC Methods
+	- Review existing literature on statistical disclosure control methods.
+	- Discuss specific challenges and considerations or anonymizing psychological data.
+
+• Case Study: Anonymizing a Psychological Dataset
+	- Discuss criteria for selecting appropriate anonymization techniques for the case study.
+	- Showcase use of sdc methods
+
+• Results
+	- Utility Assessment
+	- Disclosure Risk Assessment
+
+
+
+
+
