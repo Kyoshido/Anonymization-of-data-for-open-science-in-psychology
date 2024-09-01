@@ -1,0 +1,60 @@
+Comment: 
+Basically, both statistical disclosure approaches should be discussed, traditional anonymization and synthetization of data.  
+One paper might get too lengthy – possible solution: To have two very similar papers: 
+Anonymization of data for open science in psychology: Part I - synthetic data 
+Anonymization of data for open science in psychology: Part II - traditional anonymization
+(second paper by using the same data set(s) but with very shortened introduction on open science, data sharing and replication crisis)
+
+Title(s): 
+Anonymization of data for open science in psychology – Part I: synthetic tabular data
+Anonymization of data for open science in psychology – Part II: traditional anonymization of tabular data
+(or vice versa, i.e. Part I: traditional anon, Part II: synth data)
+
+Audience: 
+Psychologist
+
+Journal:
+Decide later, some journal for psychologists
+My tip is Collabra: Psychology
+https://online.ucpress.edu/collabra
+- Collabra: Psychology has 7 sections representing the broad field of psychology, and a highlighted focus area of “Methodology and Research Practice.” 
+Are: Cognitive Psychology Social Psychology Personality Psychology Clinical Psychology Developmental Psychology Organizational Behavior Methodology and Research Practice.
+
+Goal: 
+Create an article that will explain statistical disclosure methods and showcase an synthetization and traditional anonymization approach on some datasets containing psych data.
+
+Structure: 
+
+• Introduction
+	- Discuss the importance of open science and data sharing. (more lengthy on part I, part II paper citing part I paper)
+	- Discuss the Replication crisis (more lengthy on part I, part II paper citing part I paper)
+	- State the aim of the paper, which is to explain statistical disclosure methods and showcase an anonymization or synthetization approach on a psychological dataset
+
+• Overview of SDC Methods
+	- Overview of Anonymization or Synthetization Techniques, Description of SDC Methods
+	- Review existing literature on statistical disclosure control methods (with focus on applications in psychology/psychometrics)
+	- Discuss specific challenges and considerations or anonymizing or synthetization of data in psychology/psychometrics.
+	- Discuss the possibilities on utility measurement
+	- Discuss the disclosure scenarios (basically for anonymization: identity and attribute disclosure; for synthetic data: membership and inferential disclosure)
+
+
+• Case Study: Anonymizing or synthetization a data set from psychology
+	- Discuss criteria for selecting appropriate anonymization or synthetization techniques for the case study.
+	- Showcase use of SDC methods
+
+• Results
+	- Utility Assessment
+	- Disclosure Risk Assessment
+
+
+ • Discussion:
+  	- Recommendations and limits on the use of anonymization / synthetization methods
+	- Recommendations and limits on the use of utility assessment
+ 	- Recommendations and limits on the use of disclosure risk measures
+	- Challenges due to hierarchical data and cluster structures (e.g., all children in a class are surveyed).
+ 	- Future research: longitudinal data
+
+ 
+
+
+
