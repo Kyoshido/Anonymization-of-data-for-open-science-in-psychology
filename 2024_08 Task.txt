@@ -1,0 +1,1 @@
+Select data set(s) and apply both: traditional anonymization and synthetization. Produce results for both approaches first. In parallel caused by Matthias absence in August, try to write a draft on the intro.
