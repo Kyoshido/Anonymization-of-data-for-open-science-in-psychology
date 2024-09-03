@@ -6,26 +6,11 @@
 
 ##############################################################################
 
-# Packages --------------------------------------------------------------------
-
-library(xgboost)
-library(tsibble)
-library(feasts)
-library(dplyr)
-library(ggplot2)
-
 # Dataset ---------------------------------------------------------------------
 
 file <- "data.csv"
-df <- read.csv(
-  paste0(
-    c(unlist(strsplit(getwd(), "/"))[1:(length(unlist(strsplit(getwd(), "/")))
-                                        -1)], # removing n levels in files hierarchy
-      "0_Data",
-      file
-      ),collapse = '/'
-  )
-  ,sep = "\t"
+data <- read.csv(file,
+                 sep = "\t"
 )
 
 # Variables -------------------------------------------------------------------
@@ -96,7 +81,7 @@ time_question <- c(
   "Q17E", # "P.T. Barnum was wrong when he said that there's a sucker born every minute.",
   "Q18E", # "It is hard to get ahead without cutting corners here and there.",
   "Q19E", # "People suffering from incurable diseases should have the choice of being put painlessly to death.",
-  "Q20I"  # "Most people forget more easily the death of their parents than the loss of their property."
+  "Q20E"  # "Most people forget more easily the death of their parents than the loss of their property."
 )
 
 Ten_Item_Personality <- c(
@@ -170,7 +155,27 @@ time_page <- c(
   "surveyelapse"
 ) 
 
-data <- df[,c(-user_answer)]
+# Control
+# df <- data[, !(names(data) %in% c( 
+#                                  user_answer
+#                                 ,item_position
+#                                 ,time_question
+#                                 ,Ten_Item_Personality
+#                                 ,check_list
+#                                 ,demographics
+#                                 ,server
+#                                 ,time_page
+#                                 )
+#                )
+#            ]
+
+# Subset ----------------------------------------------------------------------
+
+df <- data[, c(  user_answer
+                ,Ten_Item_Personality
+                ,demographics
+                )
+           ]
 
 # "age" 
 table(df$age)
@@ -297,64 +302,13 @@ hist(df$familysize)
 
 # str(df)
 # summary(df)
-puvodni <- data
-data <- df
+
+# Save ------------------------------------------------------------------------
+
+write.csv(df, 
+          file = "data_v2.csv"
+)
+
 ###############################################################################
-# Synthesize the dataset ------------------------------------------------------
-
-# Load necessary libraries
-library(partykit)
-library(dplyr)
-
-# Assuming df is your original dataframe
-# Convert character columns to factors
-df <- df %>%
-  mutate(across(where(is.character), as.factor))
-
-# Create an empty dataframe to store synthetic data with the same structure as the original dataframe
-synthetic_data <- df[1:nrow(df), ]
-
-# Initialize synthetic_data with random values from the original data to preserve factor levels
-for (col_name in colnames(df)) {
-  synthetic_data[[col_name]] <- sample(df[[col_name]], nrow(df), replace = TRUE)
-}
-
-# Function to generate synthetic data for a single column
-generate_synthetic_column <- function(synthetic_data, col_name, model) {
-  predictions <- predict(model, newdata = synthetic_data)
-  synthetic_data[, col_name] <- predictions
-  return(synthetic_data)
-}
-
-# Generate synthetic data for each column sequentially
-for (col_name in colnames(df)) {
-  # Check if the column has only one unique level
-  if (length(unique(df[[col_name]])) == 1) {
-    synthetic_data[[col_name]] <- df[[col_name]]
-    next
-  }
-  
-  # Determine if the column is numeric or factor
-  is_numeric <- is.numeric(df[[col_name]])
-  
-  # Create a formula for the CART model using the remaining columns as predictors
-  predictors <- setdiff(colnames(df), col_name)
-  formula <- as.formula(paste(col_name, "~", paste(predictors, collapse = "+")))
-  
-  # Fit the conditional inference tree model
-  model <- ctree(formula, data = df)
-  
-  # Generate synthetic data for the column
-  synthetic_data <- generate_synthetic_column(synthetic_data, col_name, model)
-}
-
-# Convert factor levels in the synthetic dataset to match the original dataset
-for (col_name in colnames(df)) {
-  if (is.factor(df[[col_name]])) {
-    synthetic_data[[col_name]] <- factor(synthetic_data[[col_name]], levels = levels(df[[col_name]]))
-  }
-}
-
-# Display the structure and summary of the synthetic dataset
-str(synthetic_data)
-summary(synthetic_data)
+###############################################################################
+###############################################################################
