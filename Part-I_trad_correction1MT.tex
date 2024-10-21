@@ -1,0 +1,390 @@
+\documentclass{article}
+
+%% Packages 
+\usepackage[english]{babel} % Language setting
+\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry} % Set page size and margins
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Title
+\title{Anonymization of data for open science in psychology: \\ 
+       Part I — traditional anonymization
+}
+%% Authors
+\author{Jiří Novák \and 
+        Matthias Templ \and 
+        Carolin Strobl
+        }
+%% Start of article %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Abstract %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+\textcolor{red}{(Problem)} Psychology as a field experienced a crisis caused by a lack of reproducibility. 
+On the one hand, this gave rise to distrust in the results, but on the other hand, it enabled the development of open science practices. 
+% One of the key parts of open science is open data, which must be well anonymized in order to be disseminated. 
+A key component of open science is the dissemination of well-anonymized open data, which facilitates transparency while protecting privacy.
+
+More openly available data would make research more transparent and accessible. Unfortunately, many datasets cannot be available even to other researchers for privacy reasons. 
+%Nevertheless, researchers are increasingly more expected to share data with others for review, reanalysis, and reuse.
+Despite these challenges, researchers are increasingly expected to make data available for review, reanalysis, and reuse.
+
+\textcolor{red}{(Methodology)} 
+In this paper, we present good practices of statistical disclosure control for psychologists. 
+The practices are divided into two separated parts: the first part consists of traditional approaches, and the second part focuses on the modern approach of using synthetic data.
+The traditional approaches modify data so that it can be disseminated without revealing confidential information that may be associated with specific respondents. 
+
+\textcolor{red}{(Main findings)} \\ 
+
+\textcolor{red}{(Conclusion)} \\ 
+The paper seeks to provide practical insights into how statistical disclosure methods can effectively balance the need for data transparency and privacy in psychological research.
+Through a detailed case study, we demonstrate the practical application of these methods to protect sensitive data.
+
+\end{abstract}
+
+\keywords{
+\textbf{Keywords:} 
+open science, confidentiality, reproducibility, anonymization, sdc
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Introduction %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+
+%% Replication crisis %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textcolor{red}{Discuss the Replication crisis (more lengthy on part I, part II paper citing part I paper)}
+
+The replication and reproducibility crisis has received much attention in the last decade~\cite{2012_Yong}.
+The replication crisis is a phenomenon in science, particularly in psychology and medicine, where many previously published scientific studies cannot be replicated or reproduced with similar results. This means that when other researchers attempt to repeat the experiments using the original methodology, they fail to achieve the same outcomes. This issue raises concerns about the reliability and validity of scientific findings, leading to criticism of certain research practices, such as statistical errors, flawed experimental design, or the publication of only positive results.
+
+In 2015, Open Science Collaboration~\cite{2015_OSC} of 271 authors examined the reproducibility of experiments in psychology. They selected about 100 studies from three psychology journals with the aim of achieving the same results as the original studies.  Only 36\% of original studies achieved significant results.
+\textcolor{red}{Should I write more?}
+\newline
+
+
+
+% In contemporary research, Open science practices are becoming increasingly important. Scientists process increasingly detailed data, which, however, in the field of psychology, are sensitive to the nature of the variables observed.
+Open science practices are gaining importance in contemporary research, particularly in psychology, where researchers handle susceptible data. The sensitive nature of psychological variables often hinders data sharing, contributing to the replicability crisis in the field.
+
+Therefore, data cannot be shared well among researchers, which is one reason for the crisis of scientific replicability. Data from publicly funded research should be more widely disseminated, at least among scientists. They should then be able to replicate studies, try new methods on the given data, or verify the results presented in the given article or study.
+\newline
+
+%% Open science %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textcolor{red}{Discuss the importance of open science and data sharing. (more lengthy on part I, part II paper citing part I paper)}
+
+Open science is a movement that has been gaining strength and importance in recent years.
+%The movement's goal is to make available the results of scientific research, arising on the basis of public finances, so that they are reusable and replicable, traceable and transparent, trustworthy, and more financially effective, enabling a better connection of science across the world.
+The movement aims to make scientific research funded by public resources openly available so that it can be reused, replicated, traced, and trusted. This transparency also enhances the financial efficiency of research, fostering better global scientific collaboration.
+
+All started by Budapest Open Access Initiative~\cite{2012_OSI} in 2002, which was then supplemented with a set of rules in 2012~\cite{2012_OSI} and 2022~\cite{2022_OSI}.  This was followed by the Bethesda Statement on Open-Access Publishing~\cite{2003_Bethesda} in 2003 and Berlin Declaration on Open Access to Knowledge in the Sciences and Humanities~\cite{2003_Max_Planck}.
+
+Budapest Open Access Initiative (BOAI)~\cite{2002_OSI} define \textit{Open Access} (OA) as \textit{"free availability on the public internet, permitting any users to read, download, copy, distribute, print, search, or link to the full texts of these articles, crawl them for indexing, pass them as data to software, or use them for any other lawful purpose, without financial, legal, or technical barriers other than those inseparable from gaining access to the internet itself"}.
+
+In recommendations from 2012 BOAI~\cite{2012_OSI} further specified that \textit{"The worldwide campaign for OA to research articles should work more closely with the worldwide campaigns for OA to books, theses and dissertations, research data, government data, educational resources, and source code."}. In 2022, new recommendations~\cite{2022_OSI} for the next 10 years were released. Strong emphasis was put on Open infrastructure and its governance. It is recommended that OA texts, data, metadata, code, and other digital research outputs be hosted and published on open, community-controlled infrastructure. \textit{Open science} is made from open data, open metadata, open citations, open code, open protocols, open books, open theses and dissertations, open educational resources, open courseware, open digitization projects, open licenses, open standards, and open peer review.
+
+From recent developments in recommendations to Open Science is necessary to mention Commission Recommendation (EU) 2018/790 of 25 April 2018 on access to and preservation of scientific information~\cite{2018_EU_2018/790}, the European University Association (EUA) Open Science Agenda 2025~\cite{2022_EUA} and UNESCO Recommendation on Open Science~\cite{2021_UNESCO}.
+
+Recommendation 2018/790~\cite{2018_EU_2018/790} states that research data resulting from publicly funded research, including open access, should be findable, accessible, interoperable and re-usable, so-called \textit{FAIR principles}, unless this is unfeasible or conflicts with the future use of the research findings. There should be a strong emphasis on principle \textit{"As open as possible, as closed as necessary"}. 
+EUA~\cite{2022_EUA} established its Open Science strategy for 2025 with three main priority areas: Open Access to scholarly outputs, FAIR research data, and institutional approaches to research assessment. In the vision of EUA 2025 are mentioned \textit{FAIR research data} as the norm in producing and sharing scientific knowledge and \textit{Open Science} as an integral part of research assessment practices.
+
+UNESCO Recommendation~\cite{2021_UNESCO} defines \textit{Open Science} as \textit{"an
+inclusive construct that combines various movements and practices aiming
+to make multilingual scientific knowledge openly available, accessible and
+reusable for everyone, to increase scientific collaborations and sharing of
+information for the benefits of science and society, and to open the processes of scientific knowledge creation, evaluation and communication to societal actors beyond the traditional scientific community"}. In this recommendation, UNESCO promotes open access to scientific knowledge but equally emphasises the need for tools for pseudonymizing and anonymizing data so that as much data as possible can be shared as appropriate.
+\newline
+
+%% Anonymization %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Anonymization of personal information must be approached from the point of view 
+of the field of Statistical Disclosure Control (SDC). This research area is also known as Statistical disclosure limitation or Disclosure avoidance.
+Hundepool~\cite{2012_Hundepool} describes SDC as a process that seeks to protect statistical data so that it can be released without divulging confidential information that can be linked to specific individuals or entities.
+
+There are several major reasons for data anonymization, namely statistical principles, legal obligations, quality assurance, and ethical causes. 
+
+United Nations~\cite{2015_UN} lists confidentiality of the data as a sixth fundamental principle of Official Statistics. This principle states that the statistical records of individual persons, businesses, or events used to produce Official Statistics are strictly confidential and to be used only for statistical purposes. It is evident that this principle applies not only to Official Statistics but also to every other field processing sensitive information, which should secure the confidentiality of its records. The European Union defined this approach in its Code of European Statistics~\cite{2018_Eurostat} as the fifth principle — Statistical Confidentiality and Data Protection, which states that the privacy of data providers, the confidentiality of the information they provide, its use only for statistical purposes and the security of the data are absolutely guaranteed.
+
+Legislation imposes a legal obligation to protect individual business and personal data. Legal frameworks regulate what is allowed and what is not allowed regarding the publication of private information. In the member countries of the European Union, national statistical confidentiality is supported by EU legislation. The regulation of the European Parliament, better known by the abbreviation GDPR~\cite{2016_EU_2016/679}, is a pan-European legal framework for the protection of personal data, which protects the rights of citizens against unauthorized handling of their data and personal data.
+In the context of the field of psychology, it is necessary to mention the legislation of the United States of America called HIPAA~\cite{1996_HIPAA} - Health Insurance Portability and Accountability Act.
+The HIPAA Privacy Rule establishes standards for protection of individuals' medical records and other individually identifiable health information.
+
+Quality assurance corresponds with confidence of respondents in the preservation of the confidentiality of individual information. If they do not trust in the confidentiality of the data, they may not provide accurate information. United Nations~\cite{2007_UN} emphasise that its necessary to maintain the trust of respondents if they are to continue to cooperate in their data collections. If respondents perceive that confidentiality of their data will not be protected, they are less likely to provide accurate data. 
+
+Lastly disclosing information that can be linked to specific individuals or entities is unethical. Declaration on Professional Ethics~\cite{2010_ISI} set of Ethical Principles for statisticians and a wide array of creators and users of statistical data and tools. 
+Disclose information that can be directly or indirectly linked to specific individuals or entities without their consent is considered unethical. Such actions may compromise privacy, lead to potential misuse of data, and violate principles of confidentiality. Ethical considerations require careful handling of sensitive information to prevent harm and uphold respect for personal and organizational boundaries. Necessary steps must be implemented to ensure that data are released in a way that protects the confidentiality of individuals, preventing their identities from being disclosed or inferred.
+\newline
+
+%% Aim %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textcolor{red}{State the aim of the paper, which is to explain statistical disclosure methods and showcase an anonymization or synthetization approach on a psychological dataset}
+
+The aim of this paper is to explore and elucidate the various statistical disclosure control methods available for the anonymization of data in the context of open science within psychology. 
+This paper will specifically focus on presenting a detailed examination of traditional anonymization, demonstrating their application to a psychological dataset. Through this analysis, the paper seeks to provide practical insights into how these methods can be effectively utilized to balance the need for data transparency and privacy in psychological research.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Disclosure risk %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Disclosure risk}
+
+Disclosure is defined~\cite{2012_Hundepool} as when a person or an organisation (intruders) recognises or learns something that they did not already know about another person or organisation via released data.
+The first step of anonymization is evaluating risks that threaten the data. This is approached by creating disclosure scenarios~\cite{2012_Hundepool} tailored to the data that will be disseminated. 
+
+
+\subsection{Disclosure scenarios}
+
+\textcolor{red}{Somewhere we also need to explain what are direct, indirect identifiers, sensible variables, non-relevant variables for anonymization.}
+
+
+%% Disclosure attackss %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Disclosure scenario}
+
+From these scenarios, the types of data disclosures emerge.
+
+At the beginning of the SDC process, data must be cleaned of direct identifiers such as name, social security number or similar ID, address, and e-mail. This is called de-identification~\cite{2001_Duncan} or pseudo-anonymization. This alone does not prevent de-identification and revealing new information to the intruder.
+
+\textcolor{red}{Review existing literature on statistical disclosure control methods (with focus on applications in psychology/psychometrics)}
+
+X
+
+\textcolor{red}{Discuss specific challenges and considerations or anonymizing of data in psychology/psychometrics.}
+
+X
+
+\textcolor{red}{Discuss the possibilities on utility measurement}
+
+X
+
+\textcolor{red}{Discuss the disclosure scenarios (basically for anonymization: identity and attribute disclosure; for synthetic data: membership and inferential disclosure)}
+
+X
+
+The scenarios depend on the intruder's intentions, prior knowledge, and the available data.
+Depending on the intention of the intruders, their type of a priori knowledge and the microdata available.
+Disclosure risks that may occur are identity disclosure, attribute disclosure, defined by~\cite{1989_Duncan}, and inferential disclosure, defined by~\cite{1977_Dalenius}.
+
+\paragraph{Identity disclosure:} is the association or linking of the specific respondent to a record. Preventing this is of great importance. 
+
+\textcolor{blue}{Example how to describe one of the scenarios}
+\color{red}
+\paragraph{Attribute Disclosure:} Occurs when specific information or attributes about an individual are revealed without necessarily identifying the person themselves. Even if the individual’s identity remains anonymous, sensitive characteristics or behaviors linked to them may be disclosed, leading to potential privacy risks. In other words, attribute disclosure doesn’t rely on knowing who a person is but rather on revealing what is true about them. This can have harmful consequences, especially when the disclosed attributes are sensitive, stigmatized, or could lead to discrimination.
+
+In psychological and psychometric data, this can be particularly problematic because participants often provide highly personal and sensitive information—such as mental health status, personality traits, or risky behaviors—that they would not want disclosed, even if their names are not attached to the data. Attribute disclosure can happen if the characteristics of a person are unique enough or if those attributes can be inferred through combining seemingly innocuous pieces of information (like age, location, or gender) with responses on psychological scales or ratings.
+
+Example: 
+Suppose a research participant has filled out a questionnaire that includes both socio-demographic information and responses to a sensitive mental health scale, such as one measuring depression or anxiety. Someone might not know the exact identity of the participant but could still infer that someone within a particular group (e.g., women over 50 with a specific level of education) has a high score on the depression scale, which could lead to conclusions about members of that group.
+
+
+
+Why Attribute Disclosure is harmful:
+\cite{2022_Wairimu} and Kilovaty \cite{2021_Kilovaty} highlight how sensitive information, such as diagnoses or treatments, may be revealed in ways that lead to embarrassment, stigmatization, or discrimination. This exposure can come from family, friends, the wider public, or organizations that may misuse this information, affecting an individual’s well-being. The authors emphasize that attribute disclosure can still occur if identifiable details like demographics are masked but correlate with sensitive information in clinical or psychometric studies.
+For instance, consider a situation where a patient's demographic information is generalized, but their responses or scores on a study about paranoid schizophrenia could still expose their diagnosis. In this case, the mental health data, although anonymized, might be used to infer sensitive personal information about the individual, leading to potential harm. In psychometrics, this is particularly problematic, as attributes being disclosed often pertain to deeply personal issues—such as mental health, personality, or behaviors—where even indirect exposure can result in stigma, discrimination, or embarrassment for both individuals and groups.
+\newline
+
+
+\subsection{Attacker Scenarios}
+
+\paragraph{Nosy neighbor scenario:}  
+In this type of attack, the attacker has existing knowledge of one or more individuals in the dataset. This knowledge may include  private knowledge, such as participation in a study or specific responses. By comparing this background information to anonymized data, the attacker can isolate the individual's record and infer sensitive attributes, such as mental health status, survey responses, or psychometric scores.
+
+Example:
+
+Imagine an attacker knows that a 42-year-old female manager from a specific region participated in a psychological study on workplace stress. While the data set is anonymized, it contains enough socio-demographic information, such as age, occupation, and region, to make the participant’s record unique. The attacker cross-references this knowledge and identifies the specific individual in the data set. Once identified, the attacker could then infer sensitive responses—such as scores on a stress or mental health scale—that the individual had shared under the assumption of anonymity.
+Also participants that complete psychometric assessments such as a well-being scale (e.g., the satisfaction with life scale or a loneliness measure) alongside data about their social network can be disclosed by friendship links, which might carry significant information to disclose sensitive information \citep{Zheleva09}.
+
+Risk: The risk of a background knowledge attack increases when individuals have unique or rare combinations of attributes within the dataset, making them more identifiable. Attributes like age, gender, occupation, education level, and location -- while seemingly non-identifiable on their own -- can become identifiable when combined in specific ways. There is always a high risk that a ‘nosy neighbor’ who knows very specific details about a person (e.g., their movements when studying how depressive symptoms and anxiety levels correlate with daily mobility patterns, available as GPS data) could use this information to link the individual to publicly released open-access data.
+
+
+\subsection{Data precularies}
+
+\textcolor{red}{***}
+
+\begin{table}[]
+\begin{small}
+
+    \centering
+    \begin{tabular}{p{2cm}|p{2cm}|p{2cm}|p{3cm}|p{5cm}|}
+    \toprule
+       kind of data  & structure  & sensitivness & risk & anonymization \\
+       \midrule
+       Psychometric test scores   & highly granular, often highly correlated & can be high & sensitive attribute disclosure (e.g., mental health diagnosis, personality traits) can occur if linked with other data or demographic profiles. & difficult to generalize or group psychometric item responses without losing significant information about the underlying construct being measured. Often enough to anonymize indirect identifiers, when potential attackers know little about the measurement of the items. \\
+       \midrule
+       &&&& \\
+       \bottomrule
+    \end{tabular}
+    \caption{Common data structures in psychology and psychometrics and their relationship to disclosure risk and anonymization.}
+    \label{tab:my_label}
+
+\end{small}
+\end{table}
+
+
+
+\subsection{Evaluating disclosure risk}
+
+\subsection{k-anonymity:}
+$k$-Anonymity is a privacy protection mechanism that ensures each individual in a dataset cannot be distinguished from at least $k$  other individuals based on certain identifying attributes. In the context of psychology and psychometry, $k$-anonymity can be used to protect sensitive data (such as mental health scores, socio-demographic characteristics, or mobility patterns) by making sure that participants’ data entries are indistinguishable from those of at least $k$  others based on specific quasi-identifiers (e.g., age, gender, occupation).  $k$-anonymity is evaluated on the indirect-identifiers. For example, in \citep{schoenbrodt21} the authors measured (and anonymized the data using \cite{2024_Sdcmicro} to achieve) $5$-anonymity for a data base responses to 54 classic and new picture stimuli that have
+been used in picture story exercise to measure coding motive imagery in a psychometrics study regarding their key variables age and gender.
+
+\color{black}
+
+
+
+Dissemination of findings from psychological science is discussed by Purtle \cite{2020_Purtle}, they advocate for a structured, evidence-based approach to effectively communicating psychological research by conducting audience research, segmenting target groups, and testing dissemination strategies, with attention to personalization and privacy concerns. However, the article does not provide detailed guidance on how to ensure privacy during the dissemination process.
+
+Couper \cite{2008_Couper} examined how perceptions of privacy, confidentiality, or risk of data disclosure affect individuals' willingness to participate in surveys. The findings show that while objective disclosure risk does not significantly reduce survey participation, perceptions of risk and topic sensitivity substantially lower the willingness to participate. Respondents are more likely to decline participation in surveys on sensitive topics, driven by concerns about privacy and potential harm, rather than the actual probability of data disclosure.
+
+Last but not least, Kilovaty \cite{2021_Kilovaty} describes that the disclosure of sensitive data can lead to profound emotional and psychological consequences, including heightened anxiety, depression, post-traumatic stress disorder, and a range of other mental health challenges that can severely impact the well-being of those affected.
+
+Wairimu \cite{2022_Wairimu} collected real-world examples of privacy breaches in healthcare.
+% 1 
+These include a case where a nurse in Florida disclosed a woman’s medical records, causing fear and embarrassment. The nurse’s actions, which involved sharing sensitive information with unauthorized individuals, highlighted the dangers of improper access to personal medical data\footnote{https://www.tampabay.com/archive/2013/06/29/records-breach-lets-out-secret/}.
+% 2 
+In the case of Hinchy v.Walgreen Co., a patient’s prescription history was shared with her ex-boyfriend, leading to emotional distress. The court found Walgreens liable for both HIPAA violations and negligence, resulting in a \$ 1.44 million judgment against the company\footnote{https://www.bswllp.com/the-intersection-of-hipaa-and-negligence-pharmacists-violation-cost-walgreens-144-million}. 
+% 3 
+Hackers leaked the medical data of high-profile athletes from the World Anti-Doping Agency, exposing sensitive medical information about the athletes and potentially causing distress for the athletes involved\footnote{https://www.bbc.com/news/world-37369705}. 
+% 4
+One patient’s HIV status was publicly accessible for months, which occurred when her medical information was shared inappropriately. This breach not only caused emotional harm but also led to feelings of fear, stigma, and a profound loss of trust in the healthcare system, leading to significant emotional harm\footnote{https://www.npr.org/sections/health-shots/2015/12/10/459091273/small-violations-of-medical-privacy-can-hurt-patients-and-corrode-trust}. 
+% 5 
+One victim of medical identity theft incurred nearly \$20,000 in fraudulent bills, causing financial strain and distress. It was caused by hackers stealing medical records and selling them on the dark web. These data often include sensitive personal information like Social Security numbers, birth dates, and medical histories\footnote{https://www.cbsnews.com/news/hackers-steal-medical-records-sell-them-on-dark-web/}. 
+% 6
+%A woman’s medical records were unlawfully accessed by her ex-partner, leading to anxiety and stress\footnote{https://www.hayesconnor.co.uk/news-resources/case-study/woman-has-her-medical-records-unlawfully-accessed-by-her-ex/}. 
+% 7
+An NHS staff member unlawfully accessed and shared a relative's confidential medical records with other family members, which resulted in psychological harm and medication use. 
+The case emphasizes the serious consequences of mishandling personal medical data, even within families\footnote{https://www.hayesconnor.co.uk/news-resources/case-study/nhs-family-member-shared-confidential-medical-information/}. 
+% 8
+% Another case involved a patient’s HIV status remaining publicly accessible for months, causing emotional distress and embarrassment.
+% 9
+In Finland, psychotherapy patients were subjected to blackmail after a data breach. The hackers obtained highly confidential patient records, including details of therapy sessions, and then attempted to blackmail both the patients and the psychotherapy clinic. Victims received ransom demands threatening to publicly release their personal mental health information if payments were not made. The breach caused widespread distress among patients and raised concerns about the security of sensitive medical data in the healthcare sector.\footnote{https://www.theguardian.com/world/2020/oct/26/tens-of-thousands-psychotherapy-records-hacked-in-finland}. 
+% 10
+%A doctor in California shared a patient’s full medical records with an investigator for personal revenge. \footnote{https://www.nzherald.co.nz/nz/breach-of-doctors-privacy-by-colleagues-condemned-by-medical-authorities-unions/US35AYFBYZRX6DZKWUWKRRE6AE/}. 
+% 11
+In a UK case, women were stalked after the unauthorized access occurred following a data breach at University Hospital Crosshouse in Scotland, where the woman's details were improperly shared\footnote{https://www.cumnockchronicle.com/news/17310994.stalker-rap-hospital-data-breach/}. 
+% 12
+%Finally, the disclosure of an influential politician’s use of an Implantable Cardioverter-Defibrillator (ICD) led to hackers manipulating the data, causing life-threatening consequences."
+\newline
+
+Walsh \cite{2018_Walsh} reviewed privacy risks associated with sharing clinical data in psychological and psychiatric research, particularly identity, attribute, and membership disclosure. The authors recognize that identity disclosure is a significant risk when sharing clinical data. Such disclosures can occur, for example, when the remaining information in a patient's record is connected to another source that reveals their identity. These sources might be publicly available or accessible only to a limited group, such as neighbours, friends or family members with whom the patient has shared their involvement in a research study. So even when explicit identifiers (like names or Social Security numbers) are removed, individuals can still be re-identified by combining other seemingly innocuous details (such as demographics, location, or medical history) with publicly available information, like voter registration records.
+They highlight that this risk is particularly concerning in the field of psychology and psychiatry because of sensitive data, like psychiatric diagnoses or treatments. 
+As mentioned in Wairimu \cite{2022_Wairimu} and Kilovaty \cite{2021_Kilovaty}, disclosed diagnoses or treatments could lead to embarrassment or result in stigmatization or discrimination by family, friends, the wider public, or organizations that might misuse this information in ways that could harm the individual’s well-being.
+The authors emphasize that attribute disclosure can happen even when identity disclosure has been prevented, making it a complex issue to address when sharing clinical data. To illustrate, consider that a patient's identifiable details (such as demographics) are combined to resemble those of many others in a study on paranoid schizophrenia. If everyone in the study shares the same diagnosis and someone can identify that a specific individual is part of the study, they will be able to deduce that this person has been diagnosed with the disorder. This is also called a membership disclosure.
+Membership disclosure is another form of privacy violation, highlighted when researchers showed that genomic summary statistics from case-control studies could allow someone with access to a person's DNA data to confirm their participation in a study. According to \cite{2017_Templ}, membership disclosure is a particular case of attribute disclosure.
+
+
+
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Overview of SDC Methods %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Overview of SDC Methods}
+
+\textcolor{red}{Overview of Anonymization or Synthetization Techniques, Description of SDC Methods}
+
+
+Statistical Disclosure Control (SDC), as defined by~\cite{2012_Hundepool}, seeks to protect statistical data in a way they can be released without revealing confidential information that can be linked to specific individuals. The goal of SDC methods is to find an optimal solution for both the risk of disclosure and the utility of protected published data.
+
+Methods intended to protect microdata are described in detail in the publications of Hundepool~\cite{2012_Hundepool}. In general, SDC methods can be divided according to when they are applied. The method can be applied directly to microdata, then we talk about pre-tabular methods, or to aggregate data in tables or hypercubes, and then we talk about post-tabular methods. The methods applied to microdata are naturally all pre-tabular methods.
+We further distinguish the methods of modifying the values into three main groups: non-perturbative methods, perturbation methods, and methods of creating synthetic and hybrid data. Non-perturbative methods adjust the detail of the data display, perturbative methods add noise to the data, and synthetic and hybrid data generation methods generate new data based on the original data. 
+\newline
+
+
+%% SDC stages %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{SDC stages}
+
+For the purposes of psychologists, we simplify the process of SDC described in ~\cite{2012_Hundepool}.
+This process consists of a few essential stages.
+
+Stage 1: Assess the need for confidentiality protection
+Stage 2: Key characteristics and use of data
+Stage 3: Disclosure risk
+Stage 4: Disclosure control methods
+Stage 5: Implementation
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Synthetization %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Case Study: Anonymizing a data set from psychology}
+
+\textcolor{red}{Discuss criteria for selecting appropriate anonymization techniques for the case study.}
+
+x
+
+\subsection{Data}
+
+The data for this example is from the Answers to the Machivallianism Test, a version of the MACH-IV from Christie and Geis~\cite{Data}, which comprises 73,489 records.
+The dataset includes both Likert-rated items and demographic variables.
+
+\subsection{sdcMicro}
+
+Package sdcMicro~\cite{2024_Sdcmicro}
+
+\textcolor{red}{Showcase use of SDC methods}
+
+x
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Results %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Results}
+
+\textcolor{red}{Utility Assessment}
+
+x
+
+\textcolor{red}{Disclosure Risk Assessment}
+
+To prove the success of data anonymisation, data utility is discussed as the main objective to be maximised while providing data with a disclosure risk below certain limits.
+
+%% Discussion %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Discussion}
+
+\textcolor{red}{
+\begin{itemize}
+    \item introduction (review findings discuss outcomes; stake a claim)
+    \item evaluation (analyze; offer explanations; reference the literature; state implications)    
+    \item conclusion (limitations; recommendations)
+\end{itemize}
+} % end of red
+
+%% Discussion %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Discussion}
+
+\textcolor{red}{Recommendations and limits on the use of anonymization methods}
+   
+x
+
+\textcolor{red}{Recommendations and limits on the use of utility assessment}
+
+x
+
+\textcolor{red}{Recommendations and limits on the use of disclosure risk measures}
+
+x
+
+\textcolor{red}{Challenges due to hierarchical data and cluster structures (e.g., all children in a class are surveyed).}
+
+x
+
+\textcolor{red}{Future research: longitudinal data}
+
+x
+
+%% Acknowledgment %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Acknowledgment \& Disclosure} 
+\subsection*{Acknowledgment} 
+This work was funded by the Swiss National Science Foundation with grant \textit{"Harnessing event and longitudinal data in industry and health sector through privacy preserving technologies"} (grant number 211751).
+
+\subsection*{Disclosure of Interests} 
+The authors have no competing interests to declare that are relevant to the content of this article. 
+
+%% End of article %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% References
+\bibliographystyle{plain}
+\bibliography{bib_part-I}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
