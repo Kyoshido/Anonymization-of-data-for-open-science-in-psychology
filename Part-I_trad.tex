@@ -184,6 +184,13 @@ Another example could be school-level data, where children in different grades a
 
 In statistics, three basic types of disclosure \cite{1993_Lambert}~\cite{1989_Duncan}~\cite{1977_Dalenius} are commonly recognized: identity disclosure, attribute disclosure, and inferential disclosure. These types are well discussed in Hundepool \cite{2012_Hundepool}, Templ \cite{2017_Templ}, and Garfinkel \cite{2023_NIST}. From a computer science perspective, Rigaki \cite{2024_Rigaki} identified four categories: membership inference, reconstruction, property inference, and model extraction. For psychology, we recommend using the following statistical definitions of disclosure.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Drawio/Type_of_disclosure.drawio.pdf}
+    \caption{Types of disclosure}
+    \label{fig:enter-label}
+\end{figure}
+
 % Identity disclosure
 \paragraph{Identity disclosure:} 
 Occurs when an individual’s identity is revealed, thereby allowing someone to link that individual to specific records or data points in a dataset. Identity disclosure occurs when the information provided is unique or detailed enough to enable re-identification, even if direct identifiers (e.g. name, address) have been removed. This form of disclosure poses a significant privacy risk because once an individual is re-identified, all associated data points are also disclosed.
@@ -272,6 +279,7 @@ Example: If an individual participated in a psychological survey, an attacker co
 %% 
 \paragraph{Inference attack:}
 X
+\newline
 
 \begin{table}[H]
     \centering
@@ -423,25 +431,17 @@ The first step of anonymization is evaluating risks that threaten the data. This
 %% Disclosure attackss %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Disclosure scenario}
 
+\textcolor{red}{— Review existing literature on statistical disclosure control methods (with focus on applications in  psychology/psychometrics)} \\
+\textcolor{red}{— Discuss specific challenges and considerations or anonymizing of data in psychology/psychometrics.} \\
+\textcolor{red}{— Discuss the possibilities on utility measurement} \\
+\textcolor{red}{— Discuss the disclosure scenarios (basically for anonymization: identity and attribute disclosure; for synthetic data: membership and inferential disclosure)} \\
+
+
 From these scenarios, the types of data disclosures emerge.
 
 At the beginning of the SDC process, data must be cleaned of direct identifiers such as name, social security number or similar ID, address, and e-mail. This is called de-identification~\cite{2001_Duncan} or pseudo-anonymization. This alone does not prevent de-identification and revealing new information to the intruder.
 
-\textcolor{red}{Review existing literature on statistical disclosure control methods (with focus on applications in psychology/psychometrics)}
 
-X
-
-\textcolor{red}{Discuss specific challenges and considerations or anonymizing of data in psychology/psychometrics.}
-
-X
-
-\textcolor{red}{Discuss the possibilities on utility measurement}
-
-X
-
-\textcolor{red}{Discuss the disclosure scenarios (basically for anonymization: identity and attribute disclosure; for synthetic data: membership and inferential disclosure)}
-
-X
 
 
 
@@ -539,8 +539,24 @@ To prove the success of data anonymisation, data utility is discussed as the mai
 \textcolor{red}{— Challenges due to hierarchical data and cluster structures (e.g., all children in a class are surveyed).} \\
 \textcolor{red}{— Future research: longitudinal data} \\
 
-%% Acknowledgment %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Acknowledgment %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section*{Acknowledgment \& Disclosure} 
 \subsection*{Acknowledgment} 
 This work was funded by the Swiss National Science Foundation with grant \textit{"Harnessing event and longitudinal data in industry and health sector through privacy preserving technologies"} (grant number 211751).
