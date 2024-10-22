@@ -10,7 +10,8 @@
 \usepackage{float} %\begin{table}[H] and table is where I want it
 \usepackage{natbib} % it was just recommended by overleaf
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Title
 \title{Anonymization of data for open science in psychology: \\ 
@@ -21,12 +22,12 @@
         Matthias Templ \and 
         Carolin Strobl
         }
-%% Start of article %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        
+%% Start of article %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 \maketitle
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Abstract %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
 \textcolor{red}{(Problem)} 
@@ -188,7 +189,7 @@ In statistics, three basic types of disclosure \cite{1993_Lambert}~\cite{1989_Du
     \centering
     \includegraphics[width=0.5\linewidth]{Drawio/Type_of_disclosure.drawio.pdf}
     \caption{Types of disclosure}
-    \label{fig:enter-label}
+    \label{fig:Types_of_disclosure}
 \end{figure}
 
 % Identity disclosure
@@ -295,6 +296,14 @@ X
     \label{tab:tab1}
 \end{table}
 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Drawio/Type_of_disclosure_attacks.pdf}
+    \caption{Disclosure attacks}
+    \label{fig:Disclosure_attacks}
+\end{figure}
+
 %% 2.3 - Kind of data %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Kind of data}
 
@@ -392,24 +401,15 @@ been used in picture story exercise to measure coding motive imagery in a psycho
 
 \paragraph{individual risk when survey samples}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 3 - Overview of SDC Methods %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Overview of SDC Methods}
+
+
+\subsection{xxxxxxxxxxxxxxxxxxxxxxxvxxxx}
 
 Statistical Disclosure Control (SDC), as defined by~\cite{2012_Hundepool}, seeks to protect statistical data in a way they can be released without revealing confidential information that can be linked to specific individuals. The goal of SDC methods is to find an optimal solution for both the risk of disclosure and the utility of protected published data.
 
-Methods intended to protect microdata are described in detail in the publications of Hundepool~\cite{2012_Hundepool}. In general, SDC methods can be divided according to when they are applied. The method can be applied directly to microdata, then we talk about pre-tabular methods, or to aggregate data in tables or hypercubes, and then we talk about post-tabular methods. The methods applied to microdata are naturally all pre-tabular methods.
-We further distinguish the methods of modifying the values into three main groups: non-perturbative methods, perturbation methods, and methods of creating synthetic and hybrid data. Non-perturbative methods adjust the detail of the data display, perturbative methods add noise to the data, and synthetic and hybrid data generation methods generate new data based on the original data. 
+
 \newline
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 4 - Case Study %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Case Study: Anonymizing a data set from psychology}
-
-%% 4.1- Data %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Data}
-The data for this example is from the Answers to the Machivallianism Test, a version of the MACH-IV from Christie and Geis~\cite{Data}, which comprises 73,489 records.
-The dataset includes both Likert-rated items and demographic variables.
 
 
 
@@ -419,7 +419,8 @@ The dataset includes both Likert-rated items and demographic variables.
 
 
 
-\vspace{20\baselineskip}
+
+
 
 
 
@@ -427,8 +428,8 @@ The dataset includes both Likert-rated items and demographic variables.
 The first step of anonymization is evaluating risks that threaten the data. This is approached by creating disclosure scenarios~\cite{2012_Hundepool} tailored to the data that will be disseminated. 
 
 
-
-%% Disclosure attackss %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Disclosure attackss %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Disclosure scenario}
 
 \textcolor{red}{— Review existing literature on statistical disclosure control methods (with focus on applications in  psychology/psychometrics)} \\
@@ -497,62 +498,134 @@ The authors emphasize that attribute disclosure can happen even when identity di
 Membership disclosure is another form of privacy violation, highlighted when researchers showed that genomic summary statistics from case-control studies could allow someone with access to a person's DNA data to confirm their participation in a study. According to \cite{2017_Templ}, membership disclosure is a particular case of attribute disclosure.
 
 
-%% SDC stages %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{SDC stages}
 
-For the purposes of psychologists, we simplify the process of SDC described in ~\cite{2012_Hundepool}.
-This process consists of a few essential stages.
 
-Stage 1: Assess the need for confidentiality protection
-Stage 2: Key characteristics and use of data
-Stage 3: Disclosure risk
-Stage 4: Disclosure control methods
-Stage 5: Implementation
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Synthetization %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace*{15cm}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 3 - Overview of SDC Methods %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Overview of SDC Methods}
+
+SDC methods are defined by Hundepool~\cite{2012_Hundepool} as a collection of methods designed to lower the risk of revealing information about individuals with the aim of reducing the disclosure risk to an acceptable level while maximizing the amount of information that can be shared.
+%SDC techniques can be defined as the set of methods to reduce the risk of disclosing information on individuals, businesses or other organisations. SDC methods minimise the risk of disclosure to an acceptable level while releasing as much information as possible.
+
+Generally, SDC methods are categorised according to when they are applied or the method of protecting the values. There are different methods for different types of data, which could be in the form of Magnitude tables, Frequency tables, or Microdata.
+
+Magnitude tables display the sum of a specific response for all respondents within each cell of the table. Each cell value reflects the total of that response across the corresponding group.
+Frequency tables show the number of respondents in each cell, with each cell value representing the number of individuals belonging to that specific category or group.
+Microdata consists of individual-level data, where each row represents a single respondent or unit of analysis, containing detailed information about their responses or characteristics.
+
+In this paper, we focus on approaches suitable for psychologists with the goal of disseminating their research data, which will be mostly in the form of microdata.
+
+
+SDC methods can be divided according to when they are applied. The method can be applied directly to microdata, then we talk about pre-tabular methods, or to aggregate data in tables or hypercubes, and then we talk about post-tabular methods. The methods applied to microdata are naturally all pre-tabular methods.
+We further distinguish the methods of modifying the values into three main groups: non-perturbative methods, perturbation methods, and methods of creating synthetic and hybrid data. Non-perturbative methods adjust the detail of the data display, perturbative methods add noise to the data, and synthetic and hybrid data generation methods generate new data based on the original data. 
+
+We also further distinguish methods into three main groups according to the method of adjusting the values: non-perturbative methods, perturbation methods, and methods simulating synthetic data. 
+Non-perturbative methods reduce the amount of information by reducing the detail in the data, perturbative methods add noise to the data, and synthetic data simulation methods generate new data based on the original data. 
+
+Methods for synthetic data generation have experienced rapid development in recent years, and we have given special attention to these methods in a separate article.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|p{4cm}|p{4cm}|p{6cm}|} % Set custom column widths
+\hline
+\multicolumn{2}{|c|}{Type of method}                               & Type of data                    & \multicolumn{1}{c|}{Description}                                                                                             \\ \hline
+\multicolumn{2}{|l|}{\textbf{Non-perturbative methods}}             &                                 & \textbf{Reducing the detail in the data}                                                                                     \\ \hline
+\multicolumn{1}{|l|}{} & Sampling              & Categorical data                & Only a sample of the original data set is published                                                                          \\ \cline{2-4} 
+\multicolumn{1}{|l|}{} & Global recoding       & Continuous and Categorical data & Categories are generalized, creating new, more general categories                                                \\ \cline{2-4} 
+\multicolumn{1}{|l|}{} & Top and bottom coding & Continuous and Categorical data & Upper or lower values are merged together to create a new, more general upper or lower category                        \\ \cline{2-4} 
+\multicolumn{1}{|l|}{} & Local suppression     & Categorical data                & Replacing high-risk values with missing values                                                                                    \\ \hline
+\multicolumn{2}{|l|}{\textbf{Perturbative methods}}                 &                                 & \textbf{Distortion of the original data}                                                                                     \\ \hline
+\multicolumn{1}{|l|}{} & Noise masking         & Continuous data                 & Adding noise to the data                                                                                                     \\ \cline{2-4} 
+\multicolumn{1}{|l|}{} & Microaggregation      & Continuous and Ordinal data     & Replacing individual values with values calculated on small aggregates                                                       \\ \cline{2-4} 
+\multicolumn{1}{|l|}{} & Data swapping         & Continuous and Ordinal data     & Swap variables between individual records                                                                                    \\ \cline{2-4} 
+\multicolumn{1}{|l|}{} & Rounding              & Continuous data                 & Replace values with their rounded counterparts                                                                                       \\ \cline{2-4} 
+\multicolumn{1}{|l|}{} & Re-sampling           & Continuous data                 & Taking multiple independent samples of a variable, sorting them, and averaging the values in each position \\ \cline{2-4} 
+\multicolumn{1}{|l|}{} & PRAM                  & Categorical data                & The value of one or more categorical variables is randomly changed according to a predefined probability                     \\ \cline{2-4} 
+\multicolumn{1}{|l|}{} & MASSC                 & Categorical data                & 1) Micro agglomeration, 2) Substitution, 3) Sub-sampling, 4) Calibration                                                        \\ \hline
+\end{tabular}
+    \caption{Overview of traditional methods}
+    \label{tab:Overview_trad}
+\end{table}
+
+%% Non-perturbative methods
+\paragraph{Non-perturbative methods} 
+Non-perturbative microdata protection is based on reducing the amount of information contained in a published file by reducing the detail in the data. They do not alter the data, but reduce the amount of information published by suppressing, categorizing, or aggregating the data. Risk cells can be suppressed, or several categories can be merged into one large category. 
+
+These methods include Sampling, Global recoding, Top and bottom coding, and Local suppression. 
+In \textbf{sampling}, only a sample of the original data set is published. For example, only 1\% of the size of the original data file is disseminated. In \textbf{global recoding}, categories are generalized, which means creating new, more general categories. \textbf{Top and bottom coding} is a global recoding for sorted data. Upper values or lower values are merged together to create a new, more general upper or lower category. Local suppression means replacing risk values with missing values. 
+
+%% Perturbative methods
+\paragraph{Perturbative methods}
+Perturbation protection is based on the attempt to preserve most of the originally collected information, but data protection consists of adjustments (perturbations) of selected values, which means distortion of the original data. The perturbation method chosen should ensure that the statistics calculated on the perturbed dataset are not significantly different from those that would have been obtained from the original dataset.
+
+Examples of methods in this category are: Noise masking, Micro-aggregation, Data swapping, Rounding, Re-sampling, PRAM or MASSC.
+
+\textbf{Noise masking} is based on adding noise to the data. This is a broad category with many approaches to adding noise. Noise is added to the original data, for example, errors with normal distributions are added to the data. 
+\textbf{Microaggregation} is a broad category of methods for continuous microdata. These methods are based on replacing individual values with values calculated on small aggregates. Individual records are grouped, and each record is replaced by the average (or another statistic) value within the group. \textbf{Data swapping} is based on exchanging values of confidential variables between individual records. In \textbf{rounding}, the original values are replaced by the rounded values. \textbf{Re-sampling} involves taking multiple independent samples of a variable, sorting them the same way, and then averaging the values in each position to create a new variable
+The post-randomisation method (\textbf{PRAM}) is a technique for protecting categorical data by intentionally misclassifying some categories. For each record in the dataset, the value of one or more categorical variables is randomly changed according to a predefined probability.
+
+
+\textbf{MASSC} is a four-step method for protecting data: 1) Micro agglomeration: Groups records into "risk strata" based on key variables where those with rare combinations are more at risk of disclosure.
+2) Substitution: Perturbs data using a probabilistic method (similar to PRAM), where original values are replaced according to a Markov matrix.
+3) Sub-sampling: Suppresses some variables or entire records based on a predefined probability, removing data that is too sensitive.
+4) Calibration: Adjusts sampling weights to maintain accuracy for important outcome variables in the masked dataset, ensuring that key analyses remain valid.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 4 - Case Study %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Case Study: Anonymizing a data set from psychology}
 
-\textcolor{red}{— Discuss criteria for selecting appropriate anonymization techniques for the case study.}
-\textcolor{red}{— Showcase use of SDC methods}
+\textcolor{red}{— Discuss criteria for selecting appropriate anonymization techniques for the case study?}
+\textcolor{red}{— Showcase use of SDC methods?}
+
+This chapter presents a few examples of anonymization on psychological datasets. 
 
 Package sdcMicro~\cite{2024_Sdcmicro}
 
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Results %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Results}
-
-\textcolor{red}{— Utility Assessment} \\
-\textcolor{red}{— Disclosure Risk Assessment} \\ 
-
-To prove the success of data anonymisation, data utility is discussed as the main objective to be maximised while providing data with a disclosure risk below certain limits.
+%% 4.1 - Data %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Data}
+The data for this example is from the Answers to the Machivallianism Test, a version of the MACH-IV from Christie and Geis~\cite{Data}, which comprises 73,489 records.
+The dataset includes both Likert-rated items and demographic variables.
 
 %% Discussion %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Discussion}
 
-\textcolor{red}{— Recommendations and limits on the use of anonymization methods} \\
-\textcolor{red}{— Recommendations and limits on the use of utility assessment} \\
-\textcolor{red}{— Recommendations and limits on the use of disclosure risk measures} \\
-\textcolor{red}{— Challenges due to hierarchical data and cluster structures (e.g., all children in a class are surveyed).} \\
+\textcolor{red}{— Recommendations and limits on the use of anonymization methods?} \\
+\textcolor{red}{— Recommendations and limits on the use of utility assessment?} \\
+\textcolor{red}{— Recommendations and limits on the use of disclosure risk measures?} \\
+\textcolor{red}{— Challenges due to hierarchical data and cluster structures? (e.g., all children in a class are surveyed).} \\
+\textcolor{red}{— Utility Assessment?} \\
+\textcolor{red}{— Disclosure Risk Assessment?} \\ 
 \textcolor{red}{— Future research: longitudinal data} \\
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+To prove the success of data anonymisation, data utility is discussed as the main objective to be maximised while providing data with a disclosure risk below certain limits.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Acknowledgment %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -563,13 +636,13 @@ This work was funded by the Swiss National Science Foundation with grant \textit
 
 \subsection*{Disclosure of Interests} 
 The authors have no competing interests to declare that are relevant to the content of this article. 
-
-%% End of article %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% End of article %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% References
 \bibliographystyle{plain}
 \bibliography{bib_part-I}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \end{document}
